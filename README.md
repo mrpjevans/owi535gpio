@@ -48,6 +48,10 @@ For each board, wire up to the GPIO as follows:
 
 Now connect each motor connector on the L298Ns to the relevant motos on the robot arm.
 
+**DO NOT POWER UP THE L298Ns BEFORE STARTING THE SCRIPT**
+
+**POWER DOWN THE L298Ns BEFORE STOPPING THE SCRIPT**
+
 ## Software
 
 Activate the local environment
