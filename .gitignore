@@ -163,3 +163,5 @@ cython_debug/
 
 # Other
 *.code-workspace
+WIFI_CONFIG.py
+MQTT_CONFIG.py
