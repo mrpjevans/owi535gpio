@@ -157,7 +157,7 @@ Running:
 python robot_controller.py
 ```
 
-## Usage Instructions
+#### Usage Instructions
 
 Once the application is running, you can control the robot arm using these keyboard commands:
 
@@ -169,36 +169,6 @@ Once the application is running, you can control the robot arm using these keybo
   - `c` / `v`: Base counterclockwise / clockwise
   - `Space`: Stop all movement
 
-- **Speed Controls:**
-  - `f`: Increase speed (maximum 10)
-  - `d`: Decrease speed (minimum 1)
-
 - **Exit:**
   - `Ctrl+C`: Exit the application
 
-## Troubleshooting
-
-1. **Connection Issues:**
-   - Verify the MQTT broker address is correct
-   - Ensure the broker is running and accessible
-   - Check network connectivity
-
-2. **Keyboard Input Not Working:**
-   - Make sure the terminal window is in focus
-   - Some terminals may require special configuration for raw input mode
-
-3. **Dependencies:**
-   - If you encounter module not found errors, verify all dependencies are installed correctly
-
-#### Usage
-
-For each version, start the script and then use these keys to control the arm.
-
-- Q/W - Wrist
-- A/S - Elbow
-- Z/X - Shoulder
-- E/R - Grip
-- C/V - Base
-- Space - All halt
-
-Ctrl+C will exit
