@@ -12,22 +12,23 @@ readline.emitKeypressEvents(process.stdin);
 process.stdin.setRawMode(true);
 
 type Payload = {
-  motor?: number,
-  speed?: number,
-  direction?: number
+  motor: string,
+  speed: number,
+  direction: number,
+  duration: number
 };
 
-const map: { [key: string]: [number, number] } = {
-  q: [0, 0],
-  w: [0, 1],
-  a: [1, 0],
-  s: [1, 1],
-  z: [2, 0],
-  x: [2, 1],
-  e: [3, 0],
-  r: [3, 1],
-  c: [4, 0],
-  v: [4, 1],
+const map: { [key: string]: [string, number] } = {
+  q: ["wrist", 0],
+  w: ["wrist", 1],
+  a: ["elbow", 0],
+  s: ["elbow", 1],
+  z: ["shoulder", 0],
+  x: ["shoulder", 1],
+  e: ["grip", 0],
+  r: ["grip", 1],
+  c: ["base", 0],
+  v: ["base", 1],
 };
 
 console.log(`Publishing to ${topic} on ${broker}`);
@@ -38,7 +39,12 @@ process.stdin.on('keypress', async (str, key) => {
   } else {
     console.log(`Pressed: '${str}'`);
 
-    let payload: Payload = {};
+    let payload: Payload = {
+      motor: "base",
+      speed: 0,
+      direction: 0,
+      duration: 0
+    };
     if (str === " ") {
       payload.speed = 0;
     } else if (str === "f" && defaultSpeed < 10) {

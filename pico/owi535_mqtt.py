@@ -4,39 +4,21 @@ import network
 import json
 
 from umqtt_simple import MQTTClient
-from dcmotor import DCMotor
+import owi535
 
 import WIFI_CONFIG
 import MQTT_CONFIG
-
-motor_pins = [[2,3,1], [8,7,9], [11,12,10], [14,13,15], [17,18,16]]
-frequency = 1000
-current = 0
-speed = 10
 
 # Take action when a payload is received
 def mqtt_cb(topic, msg):
     global current, speed
     payload = json.loads(msg)
     print("Payload received: ", payload)
-    if "motor" in payload:
-        if payload['motor'] is not current:
-            motors[current].stop()
-        current = payload['motor']
-    if "speed" in payload:
-        speed = payload['speed']
-        if speed is 0:
-            motors[current].stop()
-    if "direction" in payload:
-        if payload['direction'] is 0:
-            motors[current].forward(speed)
-        else:
-            motors[current].backward(speed)
-
-# Set up motor instances
-motors = []
-for motor_pin in motor_pins:
-    motors.append(DCMotor(Pin(motor_pin[0], Pin.OUT), Pin(motor_pin[1], Pin.OUT), PWM(motor_pin[2], frequency)))
+    owi535.all_stop()
+    speed = 10 if'speed' not in payload else payload['speed']
+    direction = False if payload['direction'] is 0 else True
+    duration = 0 if 'duration' not in payload else payload['duration']
+    owi535.move(payload['motor'], direction, speed, duration)
 
 # Connect to wifi
 wlan = network.WLAN(network.STA_IF)
@@ -50,6 +32,7 @@ while wlan.isconnected() == False:
         print("Giving up")
         break
     sleep(1)
+print('Wifi connected')
 
 # Subscribe to MQTT broker
 print("Subscribing to MQTT topic")
@@ -58,6 +41,9 @@ mqttClient.set_callback(mqtt_cb)
 mqttClient.connect()
 mqttClient.subscribe(MQTT_CONFIG.MQTT_SUB_TOPIC)
 
+led = Pin("LED", Pin.OUT)
+led.on()
+
 # Process MQTT messages
 print("Waiting for MQTT messages")
 try:
@@ -65,4 +51,7 @@ try:
         mqttClient.wait_msg()
 except KeyboardInterrupt:
     print('Keyboard Interrupt')
-    motors[current].stop()
+    owi535.all_stop()
+    mqttClient.disconnect()
+    wlan.disconnect()
+

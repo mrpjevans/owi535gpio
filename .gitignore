@@ -168,3 +168,4 @@ node_modules
 *.code-workspace
 WIFI_CONFIG.py
 MQTT_CONFIG.py
+.DS_Store
