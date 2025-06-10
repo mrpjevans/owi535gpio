@@ -4,7 +4,14 @@ from time import sleep
 from dcmotor import DCMotor
 
 # Pins (Motor 1 , Motor 2, Enable)
-motor_pins = [2,3,1]
+base = [2, 3, 1]
+shoulder = [7, 8, 9]
+elbow = [11, 12, 10]
+wrist = [13, 14, 15]
+grip = [17, 18, 16]
+
+# Choose the motor to test
+motor_pins = base
 
 frequency = 1000
 speed = 10
