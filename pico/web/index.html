@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Robot Arm</title>
+</head>
+<body>
+	<h1>Robot Arm Controls</h1>
+	<div class="robot-controls">
+		<div class="joint-control">
+			<label>Base:</label>
+			<button onclick="sendCommand('base', 'forward')">Forward</button>
+			<button onclick="sendCommand('base', 'reverse')">Reverse</button>
+		</div>
+		<div class="joint-control">
+			<label>Shoulder:</label>
+			<button onclick="sendCommand('shoulder', 'forward')">Forward</button>
+			<button onclick="sendCommand('shoulder', 'reverse')">Reverse</button>
+		</div>
+		<div class="joint-control">
+			<label>Elbow:</label>
+			<button onclick="sendCommand('elbow', 'forward')">Forward</button>
+			<button onclick="sendCommand('elbow', 'reverse')">Reverse</button>
+		</div>
+		<div class="joint-control">
+			<label>Wrist:</label>
+			<button onclick="sendCommand('wrist', 'forward')">Forward</button>
+			<button onclick="sendCommand('wrist', 'reverse')">Reverse</button>
+		</div>
+		<div class="joint-control">
+			<label>Grip:</label>
+			<button onclick="sendCommand('grip', 'forward')">Forward</button>
+			<button onclick="sendCommand('grip', 'reverse')">Reverse</button>
+		</div>
+	</div>
+	<div class="stop-container">
+		<button class="stop-btn" onclick="sendStop()">STOP</button>
+	</div>
+	<script>
+	function sendCommand(part, direction) {
+		fetch(`/${part}/${direction}`, { method: 'GET' });
+	}
+	function sendStop() {
+		fetch('/stop', { method: 'GET' });
+	}
+	</script>
+	<style>
+		.robot-controls {
+			display: flex;
+			flex-direction: column;
+			gap: 1em;
+			max-width: 300px;
+			margin: 2em auto;
+			padding: 1em;
+			border: 1px solid #ccc;
+			border-radius: 8px;
+			background: #f9f9f9;
+		}
+		.joint-control {
+			display: flex;
+			align-items: center;
+			gap: 1em;
+		}
+		label {
+			width: 80px;
+			font-weight: bold;
+		}
+		button {
+			padding: 0.5em 1em;
+			border: none;
+			border-radius: 4px;
+			background: #0078d7;
+			color: white;
+			cursor: pointer;
+			transition: background 0.2s;
+		}
+		button:hover {
+			background: #005fa3;
+		}
+		.stop-container {
+			display: flex;
+			justify-content: center;
+			margin-top: 2em;
+		}
+		.stop-btn {
+			font-size: 2em;
+			padding: 0.7em 2em;
+			background: #d32f2f;
+			color: #fff;
+			border: none;
+			border-radius: 8px;
+			font-weight: bold;
+			cursor: pointer;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+			transition: background 0.2s, transform 0.1s;
+		}
+		.stop-btn:hover {
+			background: #b71c1c;
+			transform: scale(1.05);
+		}
+	</style>
+</body>
+</html>
